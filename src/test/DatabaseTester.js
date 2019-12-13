@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux';
-import todoJson from './TestTodoListData.json'
+import Users_Data_Json from './UsersAndWireframeData.json'
 import { getFirestore } from 'redux-firestore';
 
 class DatabaseTester extends React.Component {
@@ -10,22 +10,23 @@ class DatabaseTester extends React.Component {
     // TO LOG IN
     handleClear = () => {
         const fireStore = getFirestore();
-        fireStore.collection('todoLists').get().then(function(querySnapshot){
+        fireStore.collection('users_data').get().then(function(querySnapshot){
             querySnapshot.forEach(function(doc) {
                 console.log("deleting " + doc.id);
-                fireStore.collection('todoLists').doc(doc.id).delete();
+                fireStore.collection('users_data').doc(doc.id).delete();
             })
         });
     }
 
     handleReset = () => {
         const fireStore = getFirestore();
-        todoJson.todoLists.forEach(todoListJson => {
-            fireStore.collection('todoLists').add({
-                    name: todoListJson.name,
-                    owner: todoListJson.owner,
-                    items: todoListJson.items,
-                    time: + new Date()
+        Users_Data_Json.users_data.forEach(dataFeild => {
+            fireStore.collection('users_data').add({
+                    user_id: dataFeild.user_id,
+                    first_name: dataFeild.first_name,
+                    last_name: dataFeild.last_name,
+                    wireframes: dataFeild.wireframes,
+                    time: + new Date(),
                 }).then(() => {
                     console.log("DATABASE RESET");
                 }).catch((err) => {

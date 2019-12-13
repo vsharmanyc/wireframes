@@ -35,13 +35,13 @@ class HomeScreen extends Component {
 
                     <div className="col s8">
                         <div className="banner">
-                            @todo<br />
-                            List Maker
+                            Wireframes<br />
+                            Maker
                         </div>
                         
                         <div className="home_new_list_container">
                                 <button className="home_new_list_button" onClick={this.handleNewList.bind(this)}>
-                                    Create a New To Do List
+                                    Create a New Wireframe
                                 </button>
                         </div>
                     </div>

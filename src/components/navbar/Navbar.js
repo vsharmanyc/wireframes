@@ -15,7 +15,7 @@ class Navbar extends React.Component {
     return (
       <nav className="nav-wrapper teal accent-4">
         <div className="container">
-          <Link to="/" className="brand-logo">@todo</Link>
+          <Link to="/" className="brand-logo">Wireframes</Link>
           {links}
         </div>
       </nav>
