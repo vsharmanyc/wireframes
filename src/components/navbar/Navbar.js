@@ -10,6 +10,7 @@ class Navbar extends React.Component {
 
   render() {
     const { auth, profile } = this.props;
+    console.log(profile)
     const links = auth.uid ? <LoggedInLinks profile={profile} /> : <LoggedOutLinks />;
 
     return (

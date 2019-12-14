@@ -52,7 +52,18 @@ class HomeScreen extends Component {
 }
 
 const mapStateToProps = (state) => {
+    console.log("list screen mstp");
+    let email = state.firebase.profile.email;
+    let users = state.firestore.ordered.users_data;
+    let wireframes;
+    for(let i = 0; users != null && i < users.length; i++){
+        if(users[i].user_id == email){
+            wireframes = users[i].wireframes;
+            break;
+        }
+    }
     return {
+        wireframes: wireframes,
         auth: state.firebase.auth
     };
 };
@@ -60,6 +71,6 @@ const mapStateToProps = (state) => {
 export default compose(
     connect(mapStateToProps),
     firestoreConnect([
-      { collection: 'todoLists',  orderBy: ['time', 'desc'] },
+      { collection: 'wireframes',  orderBy: ['time', 'desc'] },
     ]),
 )(HomeScreen);

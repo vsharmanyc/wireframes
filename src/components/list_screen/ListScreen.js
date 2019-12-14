@@ -13,15 +13,15 @@ class ListScreen extends Component {
 
     componentDidMount() {
         const fireStore = getFirestore();
-        fireStore.collection('todoLists').doc(this.props.todoList.id).update({time: + new Date()});
+        console.log("YALLA");
+        console.log(this.props.wireframe.key);
+        fireStore.collection('users_data').doc(this.props.wireframe.key).update({time: 1234});
     }
 
     state = {
         name: '',
         owner: '',
     }
-
-    sortIncreasing = true;
 
     handleChange = (e) => {
         const { target } = e;
@@ -45,20 +45,7 @@ class ListScreen extends Component {
         this.props.history.push("/");
     }
 
-    sortTask = (e) => {
-        console.log("SORT TASK");
-        this.sortItemsBy(function(a,b){return a["description"] > b["description"]});
-    }
-
-    sortDueDate = (e) => {
-        console.log("SORT DUE DATE");
-        this.sortItemsBy(function(a,b){return a["due_date"] > b["due_date"]});
-    }
-
-    sortStatus = (e) => {
-        console.log("SORT STATUS");
-        this.sortItemsBy(function(a,b){return a["completed"] + "" > b["completed"] + ""});
-    }
+ 
 
     sortItemsBy(sortFunction) {
         let items = this.props.todoList.items;
@@ -93,7 +80,7 @@ class ListScreen extends Component {
 
     render() {
         const auth = this.props.auth;
-        const todoList = this.props.todoList;
+        const wireframe = this.props.wireframe;
         
         if (!auth.uid) {
             return <Redirect to="/" />;
@@ -102,73 +89,37 @@ class ListScreen extends Component {
         console.log("KJFHKJHFKJDHKJFHDKFHDKJFHDKJF");
 
         return (
-            <div className="container cyan lighten-4">
-                 <a class="btn-floating black right"><Modal header="Delete List?" trigger={<i class="material-icons">delete</i>}>
-                    <p>
-                        Are you sure you want to delete this list?<br></br><br></br>
-                        <Button
-                            node="a"
-                            waves="light"
-                            small
-                            style={{ marginRight: '5px' }}
-                            onClick={this.trashClicked}
-                        >Yes</Button>
-
-                        <Button
-                            node="a"
-                            waves="light"
-                            small
-                            style={{ marginRight: '5px' }}
-                            modal="close"
-                        >No</Button>
-
-                    </p>
-                </Modal></a>
-                <h5 className="grey-text text-darken-3">Todo List</h5>
-                <div className="input-field">
-                    <label className="active" htmlFor="email">Name</label>
-                    <input type="text" name="name" id="name" onChange={this.handleChange} defaultValue={todoList.name} />
-                </div>
-                <div className="input-field">
-                    <label className="active" htmlFor="password">Owner</label>
-                    <input type="text" name="owner" id="owner" onChange={this.handleChange} defaultValue={todoList.owner} />
-                </div>
-                <div className="header">
-                    <div class="row">
-                        <div class="col s3">
-                            <span className="task" onClick={this.sortTask}><font size="4">TASK</font></span>
-                        </div>
-                        <div class="col s2">
-                            <span className="dueDate" onClick={this.sortDueDate}><font size="4">DUE DATE</font></span>
-                        </div>
-                        <div class="col s3">
-                            <span className="status" onClick={this.sortStatus}><font size="4">STATUS</font></span>
-                        </div>
-                    </div>
-                </div>
-
-                <ItemsList todoList={todoList} />
-                {/* this code puts items into a table 
-                <div dangerouslySetInnerHTML={{__html: this.makeTableHTML(todoList)}} />
-                */}
-                <Link to = {"/todoList/" + this.props.todoList.id +"/UpdateItem"}>
-                    <center><a class="btn-floating btn-large black"><i class="material-icons">add_circle</i></a></center>
-                </Link>
-                <br></br>
-            </div>
+            <div class="grid-container">
+            <div class="grid-item">1</div>
+            <div class="grid-item">2</div>
+            <div class="grid-item">3</div>
+            <div class="grid-item">4</div>
+            <div class="grid-item">5</div>
+            <div class="grid-item">6</div>
+            <div class="grid-item">7</div>
+            <div class="grid-item">8</div>
+            <div class="grid-item">9</div>
+          </div> 
         );
     }
 }
 
 
 const mapStateToProps = (state, ownProps) => {
-    const { id } = ownProps.match.params;
-    const { todoLists } = state.firestore.data;
-    const todoList = todoLists ? todoLists[id] : null;
-    todoList.id = id;
-
+    console.log("list screen mstp");
+    let email = state.firebase.profile.email;
+    let key  = ownProps.match.params.key;
+    let users = state.firestore.ordered.users_data;
+    let wireframe;
+    for(let i = 0; users != null && i < users.length; i++){
+        if(users[i].user_id == email){
+            wireframe = users[i].wireframes[key];
+            break;
+        }
+    }
+    wireframe.key = key;
     return {
-        todoList,
+        wireframe,
         auth: state.firebase.auth,
     };
 };
