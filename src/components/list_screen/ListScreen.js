@@ -49,37 +49,11 @@ c
         this.props.history.push("/");
     }
 
- 
-
-    sortItemsBy(sortFunction) {
-        let items = this.props.todoList.items;
-        items.sort(sortFunction);
-        if(!this.sortIncreasing)
-            items.reverse();
-        for(var i = 0; i < items.length; i++)
-            items[i]["key"] = i;
-        const fireStore = getFirestore();
-        fireStore.collection('todoLists').doc(this.props.todoList.id).update({ items: items });
-        this.sortIncreasing = !this.sortIncreasing;
-    }
 
     addItem = (e) => {
         console.log("ADD ITEM");
         this.props.history.push("/todoLists/" + this.props.todoList.id + "/ItemUpdate");
 
-    }
-
-    makeTableHTML(todoList) {
-        var result = "<table class=\"table table-striped\"><thead class=\"thead-default\">"
-            + "<tr><th>Task</th><th>Due Date</th><th>Status</th></tr></thead><tbody>";
-        console.log(todoList.items);
-        for (var i = 0; i < todoList.items.length; i++) {
-            result += "<tr><td>" + todoList.items[i]["description"] + "<br>Assigned To: " + todoList.items[i]["assigned_to"] + "</br></td>";
-            result += "<td>" + todoList.items[i]["due_date"] + "</td>";
-            result += "<td>" + (todoList.items[i]["completed"] ? "Completed" : "Pending") + "</td></tr>";
-        }
-        result += "</tbody></table>";
-        return result;
     }
 
     render() {

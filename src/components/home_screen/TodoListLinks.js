@@ -6,6 +6,7 @@ import TodoListCard from './TodoListCard';
 import { getFirestore } from 'redux-firestore';
 
 class TodoListLinks extends React.Component {
+
     render() {
         const wireframes = this.props.wireframes;
         console.log(wireframes);
@@ -22,6 +23,7 @@ class TodoListLinks extends React.Component {
 }
 
 const mapStateToProps = (state) => {
+    console.log("todo list card links mstp");
     let email = state.firebase.profile.email
     let users_data = state.firestore.ordered.users_data;
     let wireframes = null;
