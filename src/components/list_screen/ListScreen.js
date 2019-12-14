@@ -10,12 +10,16 @@ import { Link } from 'react-router-dom';
 import {Modal, Button} from 'react-materialize'
 
 class ListScreen extends Component {
-
+c
     componentDidMount() {
         const fireStore = getFirestore();
-        console.log("YALLA");
-        console.log(this.props.wireframe.key);
-        fireStore.collection('users_data').doc(this.props.wireframe.key).update({time: 1234});
+        console.log("List Screen componentDidMount()");
+        this.props.wireframe.time = + new Date();
+        let wireframes = this.props.wireframes;
+        this.props.wireframes.sort(function(a, b){return b.time - a.time});
+        for(let i = 0; i < wireframes.length; i++)
+            wireframes[i].key = i;
+        fireStore.collection('users_data').doc(this.props.email).update({wireframes: this.props.wireframes});
     }
 
     state = {
@@ -110,16 +114,25 @@ const mapStateToProps = (state, ownProps) => {
     let email = state.firebase.profile.email;
     let key  = ownProps.match.params.key;
     let users = state.firestore.ordered.users_data;
+    let wireframes;
     let wireframe;
     for(let i = 0; users != null && i < users.length; i++){
+        wireframes = users[i].wireframes;
         if(users[i].user_id == email){
-            wireframe = users[i].wireframes[key];
+            console.log(wireframes);
+            wireframe = wireframes[key];
+            wireframe.key = key;
             break;
         }
     }
-    wireframe.key = key;
+    console.log(email);
+    console.log(wireframes);
+    console.log(wireframe);
     return {
-        wireframe,
+        email : email,
+        state: state,
+        wireframes : wireframes,  
+        wireframe : wireframe,
         auth: state.firebase.auth,
     };
 };

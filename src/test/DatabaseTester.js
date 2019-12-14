@@ -21,12 +21,11 @@ class DatabaseTester extends React.Component {
     handleReset = () => {
         const fireStore = getFirestore();
         Users_Data_Json.users_data.forEach(dataFeild => {
-            fireStore.collection('users_data').add({
+            fireStore.collection('users_data').doc(dataFeild.user_id).set({
                     user_id: dataFeild.user_id,
                     first_name: dataFeild.first_name,
                     last_name: dataFeild.last_name,
                     wireframes: dataFeild.wireframes,
-                    time: + new Date(),
                 }).then(() => {
                     console.log("DATABASE RESET");
                 }).catch((err) => {

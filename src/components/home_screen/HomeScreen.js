@@ -9,16 +9,16 @@ import { getFirestore } from 'redux-firestore';
 class HomeScreen extends Component {
 
      async handleNewList(){
-        console.log("HANDLE NEW LIST");
+        console.log("HANDLE NEW LIST BITCH");
         const fireStore = getFirestore();
-        var todoListRef =await fireStore.collection('todoLists').add({
-            items:[],
-            name: "",
-            owner: "",
-            time: + new Date()
-        });
-        console.log(this);
-        this.props.history.push("/todoList/" + todoListRef.id);
+        let wireframes = this.props.wireframes;
+        wireframes.push({
+            "key": wireframes.length,
+            "name":"uninitialized",
+            "time": + new Date(),
+            "properties":[]});
+        fireStore.collection('users_data').doc(this.props.email).update({wireframes: wireframes});
+        this.props.history.push("/wireframe/" + (wireframes.length - 1));
     }
 
     render() {
@@ -52,17 +52,23 @@ class HomeScreen extends Component {
 }
 
 const mapStateToProps = (state) => {
-    console.log("list screen mstp");
+    console.log("home screen mstp");
     let email = state.firebase.profile.email;
     let users = state.firestore.ordered.users_data;
     let wireframes;
+    let user;
     for(let i = 0; users != null && i < users.length; i++){
         if(users[i].user_id == email){
+            user = users[i];
             wireframes = users[i].wireframes;
             break;
         }
     }
+    console.log("STATE:");
+    console.log(state);
     return {
+        email: email,
+        user : user,
         wireframes: wireframes,
         auth: state.firebase.auth
     };
@@ -71,6 +77,6 @@ const mapStateToProps = (state) => {
 export default compose(
     connect(mapStateToProps),
     firestoreConnect([
-      { collection: 'wireframes',  orderBy: ['time', 'desc'] },
-    ]),
+      { collection: 'users_data'},
+    ])
 )(HomeScreen);
