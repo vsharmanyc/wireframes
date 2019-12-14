@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { getFirestore } from 'redux-firestore';
+import {Modal, Button} from 'react-materialize'
 
 class TodoListCard extends React.Component {
     componentDidMount() {
@@ -20,6 +21,10 @@ class TodoListCard extends React.Component {
         fireStore.collection('users_data').doc(this.props.email).update({wireframes: wireframes});
     }
 
+    modalClosed = (e) =>{
+        e.preventDefault();
+    }
+
     render() {
         const { wireframe } = this.props;
         console.log(this.props)
@@ -27,7 +32,31 @@ class TodoListCard extends React.Component {
         return (
             <div className="card z-depth-0 todo-list-link cyan lighten-5">
                 <div className="card-content teal-text text-accent-4">
-                    <span className="card-title"><i class="material-icons" onClick={this.deleteWireframe}>cancel</i>{' '+wireframe.name}</span>
+                    <span className="card-title">
+                        <a class="right"><Modal header="Delete List?" 
+                        trigger={<i class="material-icons">cancel</i>}>
+                    <p>
+                        Are you sure you want to delete this list?<br></br><br></br>
+                        <Button
+                            node="a"
+                            waves="light"
+                            small
+                            style={{ marginRight: '5px' }}
+                            modal="close"
+                            onClick={this.deleteWireframe}
+                        >Yes</Button>
+
+                        <Button
+                            node="a"
+                            waves="light"
+                            small
+                            style={{ marginRight: '5px' }}
+                            modal="close"
+                            onClick={this.modalClosed}
+                        >No</Button>
+
+                    </p>
+                </Modal></a>{' '+wireframe.name}</span>
                 </div>
             </div>
         );
