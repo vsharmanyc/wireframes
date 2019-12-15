@@ -8,6 +8,8 @@
             { 
                "key":0,
                "name":"shoes.com",
+               "width": 550,
+               "height": 550,
                "time": 0,
                "properties":[ 
                   { 
@@ -60,6 +62,8 @@
             { 
                "key":1,
                "name":"friendapp.com",
+               "width": 550,
+               "height": 550,
                "time": 0,
                "properties":[ 
                   { 
@@ -142,6 +146,8 @@
             { 
                "key":2,
                "name":"mikestoys.com",
+               "width": 550,
+               "height": 550,
                "time": 0,
                "properties":[ 
                   { 
@@ -216,6 +222,8 @@
             { 
                "key":0,
                "name":"house.com",
+               "width": 550,
+               "height": 550,
                "time": 0,
                "properties":[ 
                   { 
@@ -268,6 +276,8 @@
             { 
                "key":1,
                "name":"beds.com",
+               "width": 550,
+               "height": 550,
                "time": 0,
                "properties":[ 
                   { 
@@ -320,6 +330,8 @@
             { 
                "key":2,
                "name":"cars.com",
+               "width": 550,
+               "height": 550,
                "time": 0,
                "properties":[ 
                   { 

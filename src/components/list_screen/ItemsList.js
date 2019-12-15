@@ -3,21 +3,35 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import ItemCard from './ItemCard';
 import { firestoreConnect } from 'react-redux-firebase';
-import { getFirestore } from 'redux-firestore';
+import { getFirestore } from 'redux-firestore';;
 
 class ItemsList extends React.Component {
     render() {
-        const todoList = this.props.todoList;
-        const items = todoList.items;
-        console.log("ItemsList: todoList.id " + todoList.id);
+        const properties = this.props.properties;
+        const theState = this.props.theState;
 
         return (
-            <div className="todo-lists section">
-                {items && items.map(function(item) {
-                    item.id = item.key;
-                    return (
-                        <ItemCard todoList={todoList} item={item} />
-                    );})
+            <div className="wireframes section">
+                {theState && properties && properties.map(function(property) {
+                    const container_style = {
+                        "height":property.height,
+                        "width":property.width,
+                        "background-color":property.background_color,
+                        "font-size":property.font_size,
+                        "border-color":property.border_color,
+                        "border-radius":property.border_radius,
+                        "border-width":property.border_thickness,
+                        "color":property.text_color
+                    }
+                    if(properties.element == "button")
+                        return (<button style={container_style}>{property.text}</button>);
+                    else if(properties.element == "label")
+                        return (<label style={container_style}>{property.text}</label>);
+                    else if(properties.element == "container")
+                        return(<div style={container_style}></div>);
+                    else
+                        return(<input readOnly type="text" class="browser-default" defaultValue={property.text} style={container_style}></input>);
+                })
                 }
             </div>
         );
@@ -25,9 +39,14 @@ class ItemsList extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-    const todoList = ownProps.todoList;
+    console.log("items list screen mstp");
+    console.log(ownProps);
+    console.log("NANI");
+    let properties = ownProps.properties;
+
     return {
-        todoList,
+        properties : properties,
+        state: state,
         auth: state.firebase.auth,
     };
 };
@@ -35,6 +54,6 @@ const mapStateToProps = (state, ownProps) => {
 export default compose(
     connect(mapStateToProps),
     firestoreConnect([
-        { collection: 'todoLists' },
+        { collection: 'users_data' },
     ]),
 )(ItemsList);

@@ -16,6 +16,8 @@ class HomeScreen extends Component {
         wireframes.unshift({
             "key": wireframes.length,
             "name":"",
+            "width": 550,
+            "height": 550,
             "time": + new Date(),
             "properties":[]});
         fireStore.collection('users_data').doc(this.props.email).update({wireframes: wireframes});
