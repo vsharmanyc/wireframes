@@ -12,13 +12,14 @@ class HomeScreen extends Component {
         console.log("HANDLE NEW WIREFRAME");
         const fireStore = getFirestore();
         let wireframes = this.props.wireframes;
-        wireframes.push({
+        console.log(wireframes);
+        wireframes.unshift({
             "key": wireframes.length,
-            "name":"uninitialized",
+            "name":"",
             "time": + new Date(),
             "properties":[]});
         fireStore.collection('users_data').doc(this.props.email).update({wireframes: wireframes});
-        this.props.history.push("/wireframe/" + (wireframes.length - 1));
+        this.props.history.push("/wireframe/" + 0);
     }
 
     render() {

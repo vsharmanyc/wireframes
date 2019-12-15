@@ -24,7 +24,9 @@ class ListScreen extends Component {
         fireStore.collection('users_data').doc(this.props.email).update({wireframes: this.props.wireframes});
     }
 
+
     state = {
+        diagram_name: this.props.wireframe.name,
         text_displayColorPicker: false,
         text_color: {r: '135',g: '135',b: '135',},
         border_displayColorPicker: false,
@@ -70,19 +72,24 @@ class ListScreen extends Component {
         this.setState({ background_color: color.rgb })
     };
 
-    other_state = {
-        name: '',
-        owner: '',
-    }
-
     handleChange = (e) => {
+        console.log("HANDLE CHANGE");
         const { target } = e;
+        console.log(target.id);
         console.log(e.target.value);
+        let email = this.props.email;
+        let wireframes = this.props.wireframes;
+        let wireframe = this.props.wireframe;
         const fireStore = getFirestore();
-        if (target.id == "name")
-            fireStore.collection('todoLists').doc(this.props.todoList.id).update({ name: target.value });
-        else if (target.id == "owner")
-            fireStore.collection('todoLists').doc(this.props.todoList.id).update({ owner: target.value });
+        if (target.id == "diagram_name")
+            wireframe.name = target.value;
+        else if(target.id == "diagram_width")
+            console.log(target.value);
+        else if(target.id == "diagram_height")
+            console.log(target.value);
+
+        wireframes[this.props.key] =  wireframes;
+        fireStore.collection('users_data').doc(email).update({wireframes: wireframes});
 
         this.setState(state => ({
             ...state,
@@ -151,22 +158,30 @@ class ListScreen extends Component {
         return (
             <div class="container" style={container_style}>
                 <div class="row">
+
                     <div class="col s3" style={col_style}>
-                        hi
+                        <i class="small material-icons col">zoom_in</i>
+                        <i class="small material-icons col">zoom_out</i>
+                        <font size="6" class="col s3">Save</font>
+                        <font size="6" class="col">Close</font>
+                        <input readOnly type="text" class="browser-default" id="input" defaultValue="Input"></input>
+
                     </div>
+
                     <div class="col s6" style={col_style}>
-                        hi
+
                     </div>
+
                     <div class="col s3" style={col_style}>
                         <h5>Diagram Properties</h5>
-                        <label><font size="3">Name </font><input type="text" class="browser-default" name="diagram_name"></input></label><br></br>
-                        <label><font size="3">Width </font><input type="text" class="browser-default" name="diagram_width"></input></label><br></br>
-                        <label><font size="3">Height </font><input type="text" class="browser-default" name="diagram_height"></input></label><br></br>
+                        <label><font size="3">Name </font><input type="text" class="browser-default" id="diagram_name" onChange={this.handleChange} defaultValue={wireframe.name}></input></label><br></br>
+                        <label><font size="3">Width </font><input type="text" class="browser-default" id="diagram_width" onChange={this.handleChange} ></input></label><br></br>
+                        <label><font size="3">Height </font><input type="text" class="browser-default" id="diagram_height" onChange={this.handleChange} ></input></label><br></br>
                         <h5>Control Properties</h5>
-                        <label><font size="3">Text </font><input type="text" class="browser-default" name="control_text"></input></label><br></br>
-                        <label><font size="3">Font Size </font><input type="text" class="browser-default" name="font_size"></input></label><br></br>
-                        <label><font size="3">Border Thickness </font><input type="text" class="browser-default" name="border_thickness"></input></label><br></br>
-                        <label><font size="3">Border Radius </font><input type="text" class="browser-default" name="border_radius"></input></label><br></br><br></br>
+                        <label><font size="3">Text </font><input type="text" class="browser-default" id="control_text" onChange={this.handleChange}></input></label><br></br>
+                        <label><font size="3">Font Size </font><input type="text" class="browser-default" id="font_size" onChange={this.handleChange}></input></label><br></br>
+                        <label><font size="3">Border Thickness </font><input type="text" class="browser-default" id="border_thickness" onChange={this.handleChange}></input></label><br></br>
+                        <label><font size="3">Border Radius </font><input type="text" class="browser-default" id="border_radius" onChange={this.handleChange}></input></label><br></br><br></br>
                        
                         <label><font size="3">Text Color</font><div>
                             <div style={ text_styles.swatch } onClick={ this.handleTextColorClick }>
@@ -193,6 +208,7 @@ class ListScreen extends Component {
                             </div> : null }
                         </div></label><br></br>
                     </div>
+
                 </div>
             </div>
         );
@@ -202,6 +218,7 @@ class ListScreen extends Component {
 
 const mapStateToProps = (state, ownProps) => {
     console.log("list screen mstp");
+    console.log()
     let email = state.firebase.profile.email;
     let key  = ownProps.match.params.key;
     let users = state.firestore.ordered.users_data;
@@ -220,6 +237,7 @@ const mapStateToProps = (state, ownProps) => {
     console.log(wireframes);
     console.log(wireframe);
     return {
+        key: key,
         email : email,
         state: state,
         wireframes : wireframes,  
