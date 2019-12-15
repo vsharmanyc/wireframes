@@ -30,6 +30,11 @@ export const registerHandler = (newUser, firebase) => (dispatch, getState, { get
         initials: `${newUser.firstName[0]}${newUser.lastName[0]}`,
         email: newUser.email
     })).then(() => {
+        firestore.collection('users_data').doc(newUser.email).set({
+        user_id: newUser.email,
+        first_name: newUser.firstName,
+        last_name: newUser.lastName,
+        wireframes: []});
         dispatch(actionCreators.registerSuccess);
     }).catch((err) => {
         dispatch(actionCreators.registerError);
