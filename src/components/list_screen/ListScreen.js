@@ -122,6 +122,13 @@ class ListScreen extends Component {
             borderStyle: "solid",
             borderWidth: "thin",
         }
+
+        const container_gui_style = {
+            height: 100,
+            width: 250,
+            borderStyle: "solid",
+            borderWidth: "thin",
+        }
         const col_style = {
             borderStyle: "solid",
             height: 600,
@@ -160,11 +167,21 @@ class ListScreen extends Component {
                 <div class="row">
 
                     <div class="col s3" style={col_style}>
-                        <i class="small material-icons col">zoom_in</i>
-                        <i class="small material-icons col">zoom_out</i>
-                        <font size="6" class="col s3">Save</font>
-                        <font size="6" class="col">Close</font>
-                        <input readOnly type="text" class="browser-default" id="input" defaultValue="Input"></input>
+
+                        <div>
+                            <i class="small material-icons col">zoom_in</i>
+                            <i class="small material-icons col">zoom_out</i>
+                            <font size="5" class="col s3">Save</font>
+                            <font size="5" class="col">Close</font>
+                        </div>
+                        <br></br><br></br>Text Feild<br></br>
+                        <input readOnly type="text" class="browser-default"id="input" defaultValue="Input"></input><br></br><br></br>
+                        Container
+                        <div id="container" style={container_gui_style}></div>
+                        <br></br>Label<br></br>
+                        <label id="label">Label Element</label>
+                        <br></br><br></br>Button<br></br>
+                        <button class="" id="button">Click Here</button>
 
                     </div>
 
