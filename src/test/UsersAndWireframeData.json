@@ -29,7 +29,7 @@
                   },
                   { 
                      "key":1,
-                     "element":"text field",
+                     "element":"text_field",
                      "x":0,
                      "y":10,
                      "height":3,
@@ -83,7 +83,7 @@
                   },
                   { 
                      "key":1,
-                     "element":"text feild",
+                     "element":"text_field",
                      "x":0,
                      "y":50,
                      "height":3,
@@ -98,7 +98,7 @@
                   },
                   { 
                      "key":2,
-                     "element":"text feild",
+                     "element":"text_field",
                      "x":0,
                      "y":40,
                      "height":3,
@@ -167,7 +167,7 @@
                   },
                   { 
                      "key":1,
-                     "element":"text feild",
+                     "element":"text_field",
                      "x":0,
                      "y":10,
                      "height":3,
@@ -243,7 +243,7 @@
                   },
                   { 
                      "key":1,
-                     "element":"text field",
+                     "element":"text_field",
                      "x":0,
                      "y":10,
                      "height":3,
@@ -297,7 +297,7 @@
                   },
                   { 
                      "key":1,
-                     "element":"text field",
+                     "element":"text_field",
                      "x":0,
                      "y":10,
                      "height":3,
@@ -351,7 +351,7 @@
                   },
                   { 
                      "key":1,
-                     "element":"text field",
+                     "element":"text_field",
                      "x":0,
                      "y":10,
                      "height":3,

@@ -120,18 +120,69 @@ class ListScreen extends Component {
         if(target.id == "button"){
             properties.push({
                 "key":properties.length,
-                "element":"button",
+                "element":target.id,
                 "x":0,
                 "y":0,
-                "height":3,
-                "width":7,
-                "background_color":"gray",
+                "height":20,
+                "width":60,
+                "background_color":"#C2C2C2",
                 "text":"Click Here",
                 "font_size":12,
                 "border_color":"gray",
                 "border_radius":0,
                 "border_thickness":0,
                 "text_color":"black"
+            })
+        }
+        else if(target.id == "label"){
+            properties.push({
+                "key":properties.length,
+                "element":target.id,
+                "x":0,
+                "y":0,
+                "height":20,
+                "width":80,
+                "background_color":"",
+                "text":"Label Element",
+                "font_size":12,
+                "border_color":"gray",
+                "border_radius":0,
+                "border_thickness":0,
+                "text_color":"gray"
+            })
+        }
+        else if(target.id == "text_field"){
+            properties.push({
+                "key":properties.length,
+                "element":target.id,
+                "x":0,
+                "y":0,
+                "height":20,
+                "width":60,
+                "background_color":"white",
+                "text":"Input",
+                "font_size":12,
+                "border_color":"black",
+                "border_radius":0,
+                "border_thickness":0.5,
+                "text_color":"black"
+            })
+        }
+        else{
+            properties.push({
+                "key":properties.length,
+                "element":target.id,
+                "x":0,
+                "y":0,
+                "height":30,
+                "width":30,
+                "background_color":"",
+                "text":"",
+                "font_size":"",
+                "border_color":"black",
+                "border_radius":0,
+                "border_thickness":1,
+                "text_color":""
             })
         }
         let index = properties.length -1;
@@ -212,7 +263,7 @@ class ListScreen extends Component {
                             <font size="5" class="col">Close</font>
                         </div>
                         <br></br><br></br>Text Feild<br></br>
-                        <input readOnly type="text" class="browser-default"id="input" defaultValue="Input" onClick={this.addControl}></input><br></br><br></br>
+                        <input readOnly type="text" class="browser-default"id="text_field" defaultValue="Input" onClick={this.addControl}></input><br></br><br></br>
                         Container
                         <div id="container" onClick={this.addControl} style={container_gui_style}></div>
                         <br></br>Label<br></br>
@@ -292,6 +343,7 @@ const mapStateToProps = (state, ownProps) => {
     console.log(email);
     console.log(wireframes);
     console.log(wireframe);
+    console.log(ownProps.match.params);
     return {
         key: key,
         email : email,
