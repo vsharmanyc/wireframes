@@ -10,6 +10,7 @@ import {Modal, Button} from 'react-materialize';
 import { ChromePicker } from 'react-color';
 import reactCSS from 'reactcss'
 import ItemsList from './ItemsList.js'
+import { Rnd } from "react-rnd";
 
 class ListScreen extends Component {
 
@@ -91,24 +92,20 @@ class ListScreen extends Component {
         const { target } = e;
         console.log(target.id);
         console.log(e.target.value);
-        let email = this.props.email;
-        let wireframes = this.props.wireframes;
-        let wireframe = this.props.wireframe;
         const fireStore = getFirestore();
         if(target.id == "diagram_height" || target.id == "diagram_width")
-            this.setState({[target.id]:parseInt(target.value)});
+            this.setState({[target.id]:parseFloat(target.value)});
         else
             this.setState({[target.id]:target.value});
-
-        //wireframes[this.props.key] =  wireframes;
-        //fireStore.collection('users_data').doc(email).update({wireframes: wireframes});
     }
 
-    trashClicked = (e) => {
-        console.log("TRASH CLICKED");
-        const fireStore = getFirestore();
-        var todoListRef = fireStore.collection('todoLists').doc(this.props.todoList.id).delete();
-        this.props.history.push("/");
+    controlClicked = (e) => {
+        console.log("CONTROL CLICKED");
+        console.log(e.target);
+        console.log(this.state);
+        for(var key in this.state)
+            this.setState({[key]:this.state[key]});
+
     }
 
 
@@ -121,8 +118,8 @@ class ListScreen extends Component {
             properties.push({
                 "key":properties.length,
                 "element":target.id,
-                "x":0,
-                "y":0,
+                "x":250,
+                "y":250,
                 "height":20,
                 "width":60,
                 "background_color":"#C2C2C2",
@@ -138,8 +135,8 @@ class ListScreen extends Component {
             properties.push({
                 "key":properties.length,
                 "element":target.id,
-                "x":0,
-                "y":0,
+                "x":250,
+                "y":250,
                 "height":20,
                 "width":80,
                 "background_color":"",
@@ -155,8 +152,8 @@ class ListScreen extends Component {
             properties.push({
                 "key":properties.length,
                 "element":target.id,
-                "x":0,
-                "y":0,
+                "x":250,
+                "y":250,
                 "height":20,
                 "width":60,
                 "background_color":"white",
@@ -172,15 +169,15 @@ class ListScreen extends Component {
             properties.push({
                 "key":properties.length,
                 "element":target.id,
-                "x":0,
-                "y":0,
+                "x":250,
+                "y":250,
                 "height":30,
                 "width":30,
-                "background_color":"",
+                "background_color":"#C2C2C2",
                 "text":"",
                 "font_size":"",
-                "border_color":"black",
-                "border_radius":0,
+                "border_color":"#C2C2C2",
+                "border_radius":2,
                 "border_thickness":1,
                 "text_color":""
             })
@@ -189,6 +186,7 @@ class ListScreen extends Component {
         let propertiesDict = properties[properties.length -1];
         for(var key in propertiesDict)
             this.setState({[key]:propertiesDict[key]});
+        this.setState({properties:properties});
     }
 
     render() {
@@ -275,7 +273,7 @@ class ListScreen extends Component {
 
                     <div class="col s6" style={col_style}>
                         <div class="" style={diagram_container_style}>
-                            <ItemsList properties={properties} theState={this.state} />
+                            <ItemsList properties={properties} theState={this.state} instance={this}/>
                         </div>
                     </div>
 
